@@ -8,12 +8,6 @@ var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
 // const JWT_SECRET = 'BATTLEGROUNDMOBILEOFINDIA' 
 const secret=process.env.JWT_SECRET
-// router.get('/',(req,res)=>{
-//     console.log(req.body)
-//     res.send('Hello')
-// })
-
-
 
 
 //ROUTE-1 create user using: POST "/api/auth/createuser" Doesn't require Auth //no login required
@@ -110,9 +104,9 @@ router.post('/login', [
 })
 
 //ROUTE-3 get logged in user detail  using: POST "/api/auth/getuser" // Login required
-router.post('/getuser', fetchuser, async (req, res) => {
+router.post('/getuser/:id', fetchuser, async (req, res) => {
     try {
-        userId = req.user.id;
+        let userId = req.user.id;
         const user = await User.findById(userId).select("-password");     //you get all data except password
         res.send(user)
     } catch (error) {
@@ -120,17 +114,4 @@ router.post('/getuser', fetchuser, async (req, res) => {
         res.status(500).send('Iternal server error')
     }
 })
-
-
-// const express=require('express')
-// const router=express.Router();
-// const User = require('../models/User');
-
-// router.get('/',(req,res)=>{
-//     console.log(req.body);
-//     const user=User(req.body);
-//     user.save()
-//     res.send('Hello')
-// })
-
 module.exports = router
