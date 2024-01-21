@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router();
+require('dotenv').config();
 const User = require('../models/User');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 var fetchuser = require('../middleware/fetchuser');
-const JWT_SECRET = 'BATTLEGROUNDMOBILEOFINDIA'
+// const JWT_SECRET = 'BATTLEGROUNDMOBILEOFINDIA' 
+const secret=process.env.JWT_SECRET
 // router.get('/',(req,res)=>{
 //     console.log(req.body)
 //     res.send('Hello')
@@ -52,7 +54,7 @@ router.post('/createuser', [
                 id: user.id
             }
         }
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, secret);
 
         // res.json(user)
         success = true;
@@ -96,7 +98,7 @@ router.post('/login', [
                 id: user.id
             }
         }
-        const authToken = jwt.sign(data, JWT_SECRET);
+        const authToken = jwt.sign(data, secret);
         success = true;
         res.json({ success, authToken })
     } catch (error) {

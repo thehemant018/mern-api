@@ -1,5 +1,7 @@
 var jwt = require('jsonwebtoken');
-const JWT_SECRET = 'BATTLEGROUNDMOBILEOFINDIA'
+require('dotenv').config();
+// const JWT_SECRET = 'BATTLEGROUNDMOBILEOFINDIA'
+const secret=process.env.JWT_SECRET
 fetchuser = (req, res, next) => {
     //Get the user from the jwt token and add id to req object
     const token = req.header('auth-token');
