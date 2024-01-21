@@ -1,5 +1,8 @@
 const mongoose=require('mongoose');
-const mongoURI='mongodb://localhost:27017/flamingo';
+require('dotenv').config();
+// const mongoURI='mongodb://localhost:27017/flamingo';
+
+mongoURI=process.env.MONGO_URL;
 
 const connectToMongo=()=>{
     mongoose.connect(mongoURI)
